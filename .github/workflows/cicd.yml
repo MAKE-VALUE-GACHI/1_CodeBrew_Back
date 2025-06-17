@@ -52,5 +52,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             cd ~/doctorgeondam
-            docker-compose build app
-            docker-compose up -d --build app
+            docker compose build app
+            docker compose up -d --build app
