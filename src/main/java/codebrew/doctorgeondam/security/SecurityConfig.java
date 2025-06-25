@@ -56,6 +56,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         // 인증 관련 엔드포인트는 허용
                         .requestMatchers("/signup", "/login", "/refresh").permitAll()
+                        // 메타데이터 API는 인증 없이 접근 허용
+                        .requestMatchers("/api/metadata/**").permitAll()
                         // API 문서 관련 엔드포인트 허용
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
                         // 정적 리소스 허용
