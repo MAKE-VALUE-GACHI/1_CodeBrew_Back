@@ -14,3 +14,9 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+# JWT 설정
+jwt:
+  secret: myVerySecretKeyForJwtTokenGenerationAndValidation2025DoctorGeondam
+  expiration: 86400000  # 24시간 (밀리초)
+  refresh-expiration: 604800000  # 7일 (밀리초)
