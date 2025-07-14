@@ -6,11 +6,11 @@ on:
       - develop
 
 jobs:
-  build-and-deploy-dev:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out source code
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up JDK 21
@@ -29,27 +29,30 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build Application
+      - name: Grant permission to execute gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build jar with Gradle
         run: ./gradlew bootJar
 
-      - name: Upload entire project to remote server
+      - name: Copy JAR to remote server
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          source: "./"
-          target: "doctorgeondam"
+          port: ${{ secrets.SERVER_PORT }}
+          source: "./build/libs/*.jar"
+          target: "~/doctorgeondam/build/libs"
 
-      - name: SSH into server and deploy
+      - name: Remote Docker Compose Deploy
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
           script: |
             cd ~/doctorgeondam
-            docker compose build app
-            docker compose up -d --build app
+            docker compose down
+            docker compose up -d --build

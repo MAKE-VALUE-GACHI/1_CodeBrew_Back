@@ -40,6 +40,7 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	runtimeOnly("com.h2database:h2") // 테스트용 H2 DB
+	implementation("org.jsoup:jsoup:1.17.1")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
