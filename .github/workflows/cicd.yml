@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - develop
-      - spring/11
+      - sprint/11
 
 jobs:
   build-and-deploy:
