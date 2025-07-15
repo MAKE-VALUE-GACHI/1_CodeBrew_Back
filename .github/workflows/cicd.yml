@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - spring/11
 
 jobs:
   build-and-deploy:
@@ -28,12 +29,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Grant permission to execute gradlew
-        run: chmod +x ./gradlew
-
-      - name: Build jar with Gradle
-        run: ./gradlew bootJar
 
       - name: Copy JAR to remote server
         uses: appleboy/scp-action@v0.1.4
