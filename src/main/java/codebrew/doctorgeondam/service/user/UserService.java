@@ -5,6 +5,7 @@ import codebrew.doctorgeondam.entity.UserEntity;
 import codebrew.doctorgeondam.exception.UserException;
 import codebrew.doctorgeondam.exception.AuthException;
 import codebrew.doctorgeondam.repository.jpa.UserJpaRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -86,5 +87,8 @@ public class UserService {
 
         userEntity.setPassword(passwordEncoder.encode(newPassword));
         userJpaRepository.save(userEntity);
+    }
+    public Optional<UserEntity> loadUserEntityByPhoneNumber(String phoneNumber) {
+        return userJpaRepository.findByPhoneNumber(phoneNumber);
     }
 }
